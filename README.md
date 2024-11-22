@@ -1,6 +1,4 @@
-# Helm Charts for myself
-
-Here we have collected a few charts that I use
+# Helm Charts
 
 ## TLDR
 

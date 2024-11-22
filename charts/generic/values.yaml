@@ -1,0 +1,11 @@
+# -- example value
+# extraObjects:
+#   - |
+#       apiVersion: v1
+#       kind: ConfigMap
+#       metadata:
+#         name: some-config-map
+#       data:
+#         something: something
+
+extraObjects: []

@@ -1,0 +1,13 @@
+requirements.lock
+*.tgz
+**/*.lock
+**/values-custom.yaml
+**/*.lic
+/.idea/*
+.vscode
+.DS_Store
+charts/test
+env/
+__pycache__
+.commit_message.txt
+*.iml

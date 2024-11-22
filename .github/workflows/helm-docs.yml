@@ -1,0 +1,16 @@
+name: Helm docs
+on:
+  pull_request:
+
+jobs:
+  lint-changelog:
+    name: Check all docs
+    runs-on: ubuntu-latest
+    container:
+      image: jnorwood/helm-docs:v1.11.0
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Check all charts README.md
+      run: sh ci/helm-docs.sh
