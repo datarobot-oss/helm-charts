@@ -1,6 +1,7 @@
 apiVersion: v2
 name: generic
-version: 0.0.1
+version: 0.0.2
+type: application
 keywords:
 - generic
 - template
