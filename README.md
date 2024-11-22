@@ -15,7 +15,6 @@ Contributions are welcome ❤️
 This repository has multiple Github Actions to ensure quality is high, these include:
 
 - [chart-testing](https://github.com/helm/chart-testing): lint and install tests
-- [markdown-lint](https://github.com/avto-dev/markdown-lint): lint all markdown files
 - [helm-docs](https://github.com/norwoodj/helm-docs): check all chart `README.md` have all values documented
 - [helm-conftest](https://github.com/instrumenta/helm-conftest): Ensures standard labels are present
 
@@ -43,12 +42,6 @@ All commands to be run from the root of this repo.
   brew install chart-testing
   pip3 install yamale yamllint
   ct lint --charts stable/<chart>
-  ```
-
-`markdown-lint`:
-
-  ```console
-  docker run --rm -v "$PWD:/helm-charts" avtodev/markdown-lint:v1.5.0 --config /helm-charts/ci/markdown-lint.yaml /helm-charts/**/*.md
   ```
 
 `helm-docs`:
