@@ -3,7 +3,7 @@
 ## TLDR
 
 ```console
-helm repo add datarobot-oss https://github.com/datarobot-oss/helm-charts
+helm repo add datarobot-oss https://datarobot-oss.github.io/helm-charts
 helm search repo datarobot-oss
 helm install my-release datarobot-oss/<chart>
 ```
