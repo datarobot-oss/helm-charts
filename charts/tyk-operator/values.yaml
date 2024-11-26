@@ -16,7 +16,7 @@ installCRDs: true
 keepCRDs: true
 
 image:
-  repository: tykio/tyk-operator
+  repository: docker.io/tykio/tyk-operator
   pullPolicy: IfNotPresent
   tag: "v1.0.0"
 # specify imagePullSecrets for ServiceAccount
