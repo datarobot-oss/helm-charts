@@ -46,8 +46,8 @@ jobs:
             for ch in $changed; do
               echo "checking $ch"
               cd $ch
-              IMAGE_DOC=$(yq e '.annotations."datarobot.com/images"' Chart.yaml | grep image: )
-              IMAGE_MANIFEST=$(helm template . | grep image:)
+              IMAGE_DOC=$(yq e '.annotations."datarobot.com/images"' Chart.yaml | grep image: | tr -s ' ' )
+              IMAGE_MANIFEST=$(helm template . | grep image: | tr -s ' ' )
               if [[ "$IMAGE_DOC" != "$IMAGE_MANIFEST" ]]; then
                   echo "image doc: $IMAGE_DOC"
                   echo "image manifest: $IMAGE_MANIFEST"
