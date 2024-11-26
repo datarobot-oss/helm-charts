@@ -1,0 +1,61 @@
+name: image-doc
+
+on:
+  pull_request:
+
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.2.0
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.6.1
+
+
+      - name: Get yq
+        run: |
+          if [ -x yq ]; then
+              echo "yq already installed"
+          else
+              echo "install yq"
+              sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          fi
+          yq --version
+
+      - name: check image doc
+        run: |
+          ROOT=$(pwd)
+          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
+          if [[ -n "$changed" ]]; then
+            for ch in $changed; do
+              echo "checking $ch"
+              cd $ch
+              IMAGE_DOC=$(yq e '.annotations."datarobot.com/images"' Chart.yaml | grep image: | tr -s ' ' )
+              IMAGE_MANIFEST=$(helm template . | grep image: | tr -s ' ' )
+              if [[ "$IMAGE_DOC" != "$IMAGE_MANIFEST" ]]; then
+                  echo "image doc: $IMAGE_DOC"
+                  echo "image manifest: $IMAGE_MANIFEST"
+                  exit 1
+              else
+                  echo "image doc is in sync"
+              fi
+              cd $ROOT
+            done
+          fi
+
