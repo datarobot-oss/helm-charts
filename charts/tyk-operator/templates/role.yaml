@@ -1,0 +1,381 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-leader-election-role
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+  - get
+  - list
+  - update
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - apidefinitions
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - apidefinitions/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - apidescriptions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - apidescriptions/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - apidescriptions/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - operatorcontexts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - operatorcontexts/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - operatorcontexts/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - portalapicatalogues
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - portalapicatalogues/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - portalapicatalogues/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - portalconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - portalconfigs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - portalconfigs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - securitypolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - securitypolicies/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - subgraphs
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - subgraphs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - subgraphs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - supergraphs
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - supergraphs/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - supergraphs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - tykoasapidefinitions
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - tykoasapidefinitions/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tyk.tyk.io
+  resources:
+  - tykoasapidefinitions/status
+  verbs:
+  - get
+  - patch
+  - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-metrics-reader
+rules:
+- nonResourceURLs:
+  - /metrics
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-proxy-role
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-leader-election-rolebinding
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "tyk-operator-helm.fullname" . }}-leader-election-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "tyk-operator-helm.fullname" . }}-manager-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-proxy-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "tyk-operator-helm.fullname" . }}-proxy-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager
+  namespace: {{ .Release.Namespace }}
