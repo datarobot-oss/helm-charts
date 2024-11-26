@@ -68,8 +68,11 @@ helm install my-release datarobot-oss/tyk-operator -f values.yaml
 | rbac.image.pullPolicy | string | `"IfNotPresent"` |  |
 | rbac.image.repository | string | `"gcr.io/kubebuilder/kube-rbac-proxy"` |  |
 | rbac.image.tag | string | `"v0.15.0"` |  |
+| rbac.limits.cpu | string | `"1"` |  |
+| rbac.limits.memory | string | `"1Gi"` |  |
 | rbac.port | int | `8443` |  |
-| rbac.resources | object | `{}` |  |
+| rbac.requests.cpu | string | `"100mi"` |  |
+| rbac.requests.memory | string | `"256Mi"` |  |
 | replicaCount | int | `3` |  |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"4Gi"` |  |
