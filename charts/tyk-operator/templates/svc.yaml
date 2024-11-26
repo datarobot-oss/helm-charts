@@ -4,6 +4,10 @@ kind: Service
 metadata:
   labels:
     control-plane: tyk-operator-controller-manager
+    app.kubernetes.io/name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager-metrics-service
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.Version }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
   name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager-metrics-service
   namespace: {{ .Release.Namespace }}
 spec:
@@ -19,6 +23,11 @@ kind: Service
 metadata:
   name: {{ include "tyk-operator-helm.fullname" . }}-webhook-service
   namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "tyk-operator-helm.fullname" . }}-webhook-service
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.Version }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   ports:
   - port: 443

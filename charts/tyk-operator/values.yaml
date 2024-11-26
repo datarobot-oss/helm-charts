@@ -65,7 +65,12 @@ nodeSelector: {}
 hostNetwork: false
 # rbac specifies necessary resources for kube-rbac-proxy container
 rbac:
-  resources: {}
+  requests:
+    cpu: "100mi"
+    memory: "256Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
   # specify custom/internal repo name for kube-rbac-proxy container
   image:
     repository: gcr.io/kubebuilder/kube-rbac-proxy
