@@ -52,7 +52,7 @@ helm install my-release datarobot-oss/tyk-operator -f values.yaml
 | healthProbePort | int | `8081` |  |
 | hostNetwork | bool | `false` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"tykio/tyk-operator"` |  |
+| image.repository | string | `"docker.io/tykio/tyk-operator"` |  |
 | image.tag | string | `"v1.0.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | installCRDs | bool | `true` |  |
@@ -62,13 +62,19 @@ helm install my-release datarobot-oss/tyk-operator -f values.yaml
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| podSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| podSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
 | rbac.image.pullPolicy | string | `"IfNotPresent"` |  |
 | rbac.image.repository | string | `"gcr.io/kubebuilder/kube-rbac-proxy"` |  |
 | rbac.image.tag | string | `"v0.15.0"` |  |
 | rbac.port | int | `8443` |  |
 | rbac.resources | object | `{}` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| replicaCount | int | `3` |  |
+| resources.limits.cpu | string | `"2"` |  |
+| resources.limits.memory | string | `"4Gi"` |  |
+| resources.requests.cpu | string | `"1"` |  |
+| resources.requests.memory | string | `"1Gi"` |  |
 | serviceMonitor | bool | `false` |  |
 | webhookPort | int | `9443` |  |
 
