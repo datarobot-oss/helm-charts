@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager
+  namespace: {{ .Release.Namespace }}
+{{ with  .Values.imagePullSecrets }}
+imagePullSecrets:
+  {{- toYaml . | nindent 2 }}
+{{ end }}
+

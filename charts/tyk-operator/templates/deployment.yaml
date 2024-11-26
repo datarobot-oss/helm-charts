@@ -1,0 +1,105 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: tyk-operator-controller-manager
+  name: {{ include "tyk-operator-helm.fullname" . }}-controller-manager
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{default 1 .Values.replicaCount }}
+  selector:
+    matchLabels:
+      control-plane: tyk-operator-controller-manager
+  template:
+    metadata:
+{{- with .Values.podAnnotations }}
+      annotations:
+{{- toYaml . | nindent 8 }}
+{{- end }}
+      labels:
+        control-plane: tyk-operator-controller-manager
+    spec:
+      containers:
+      - command:
+        - /manager
+{{- with .Values.envVars }}
+        env:
+{{- toYaml . | nindent 10 }}
+{{- end }}
+{{- with .Values.envFrom }}
+        envFrom:
+{{- toYaml . | nindent 10 }}
+{{- end }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.healthProbePort }}
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: manager
+        ports:
+        - containerPort: {{ .Values.webhookPort }}
+          name: webhook-server
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: {{ .Values.healthProbePort }}
+          initialDelaySeconds: 5
+          periodSeconds: 10
+{{- with .Values.resources }}
+        resources:
+{{- toYaml . | nindent 10 }}
+{{- end }}
+{{- with .Values.securityContext }}
+        securityContext:
+{{- toYaml . | nindent 10 }}
+{{- end }}
+        volumeMounts:
+        - mountPath: /tmp/k8s-webhook-server/serving-certs
+          name: cert
+          readOnly: true
+        {{ if .Values.extraVolumeMounts }}
+            {{ toYaml .Values.extraVolumeMounts | nindent 8}}
+          {{ end }}
+        - mountPath: /controller_manager_config.yaml
+          name: manager-config
+          subPath: controller_manager_config.yaml
+      - args:
+        - --secure-listen-address=0.0.0.0:{{ .Values.rbac.port }}
+        - --upstream=http://127.0.0.1:{{ .Values.metricsPort }}/
+        - --logtostderr=true
+        - --v=10
+        image: {{ .Values.rbac.image.repository }}:{{ .Values.rbac.image.tag }}
+        imagePullPolicy: {{ .Values.rbac.image.pullPolicy }}
+        name: kube-rbac-proxy
+        ports:
+        - containerPort: {{ .Values.rbac.port }}
+          name: https
+{{- with .Values.rbac.resources }}
+        resources:
+{{- toYaml . | nindent 10 }}
+{{- end }}
+      hostNetwork: {{ .Values.hostNetwork | default false }}
+{{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+{{- end }}
+      securityContext:
+        runAsNonRoot: true
+      serviceAccountName: {{ include "tyk-operator-helm.fullname" . }}-controller-manager
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: webhook-server-cert
+      {{ if .Values.extraVolumes }}
+       {{ toYaml .Values.extraVolumes | nindent 6 }}
+        {{ end }}
+      - configMap:
+          name: {{ include "tyk-operator-helm.fullname" . }}-manager-config
+        name: manager-config

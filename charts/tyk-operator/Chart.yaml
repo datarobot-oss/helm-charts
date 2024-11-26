@@ -1,0 +1,11 @@
+apiVersion: v2
+description: A Helm chart to install the tyk-operator
+name: tyk-operator
+type: application
+version: 1.0.0
+annotations:
+  datarobot.com/images: |
+    - name: tyk-operator
+      image: docker.io/tykio/tyk-operator:v1.0.0
+    - name: tyk-operator-rbac-proxy
+      image: gcr.io/kubebuilder/kube-rbac-proxy:v0.15.0
