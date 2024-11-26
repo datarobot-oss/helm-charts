@@ -43,7 +43,7 @@ jobs:
           ROOT=$(pwd)
           changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
           if [[ -n "$changed" ]]; then
-            for ch in changed; do
+            for ch in $changed; do
               echo "checking $ch"
               cd $ch
               IMAGE_DOC=$(yq e '.annotations."datarobot.com/images"' Chart.yaml | grep image: )
