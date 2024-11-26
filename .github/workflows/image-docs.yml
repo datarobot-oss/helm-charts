@@ -44,6 +44,7 @@ jobs:
           changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
           if [[ -n "$changed" ]]; then
             for ch in changed; do
+              echo "checking $ch"
               cd $ch
               IMAGE_DOC=$(yq e '.annotations."datarobot.com/images"' Chart.yaml | grep image: )
               IMAGE_MANIFEST=$(helm template . | grep image:)
