@@ -15,12 +15,6 @@ helm repo add datarobot-oss https://datarobot-oss.github.io/helm-charts
 A simple install with default values:
 
 ```console
-helm install datarobot-oss/admin-privileges
-```
-
-To install the chart with the release name `my-release`:
-
-```console
 helm install my-release datarobot-oss/admin-privileges
 ```
 
