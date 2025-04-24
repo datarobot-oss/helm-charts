@@ -1,6 +1,6 @@
 # admin-privileges
 
-![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square)
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)
 
 Resources require admin privileged permission
 
@@ -13,12 +13,6 @@ helm repo add datarobot-oss https://datarobot-oss.github.io/helm-charts
 ```
 
 A simple install with default values:
-
-```console
-helm install datarobot-oss/admin-privileges
-```
-
-To install the chart with the release name `my-release`:
 
 ```console
 helm install my-release datarobot-oss/admin-privileges
