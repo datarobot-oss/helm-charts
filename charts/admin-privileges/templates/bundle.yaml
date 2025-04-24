@@ -1,0 +1,23 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: bundle-access
+rules:
+  - apiGroups: ["trust.cert-manager.io"]
+    resources: ["bundles"]
+    verbs: ["get", "list", "watch", "create", "update", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: bundle-access
+subjects:
+  - kind: ServiceAccount
+    name: datarobot-installer
+    namespace: {{ include "admin-privileges.namespace" . }}
+roleRef:
+  kind: ClusterRole
+  name: bundle-access
+  apiGroup: rbac.authorization.k8s.io
