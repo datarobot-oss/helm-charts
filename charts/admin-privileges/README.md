@@ -1,6 +1,6 @@
 # admin-privileges
 
-![Version: 1.0.5](https://img.shields.io/badge/Version-1.0.5-informational?style=flat-square)
+![Version: 1.0.6](https://img.shields.io/badge/Version-1.0.6-informational?style=flat-square)
 
 Resources require admin privileged permission
 
@@ -35,4 +35,5 @@ helm install my-release datarobot-oss/admin-privileges -f values.yaml
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | namespaceOverride | string | `nil` | namespaceOverride |
+| serviceAccount.name | string | `"datarobot-installer"` | Service Account name |
 
