@@ -1,2 +1,7 @@
 # -- namespaceOverride
 namespaceOverride:
+serviceAccount:
+  # -- Service Account name
+  name: datarobot-installer
+  # -- Service Account annotation
+  annotations: {}
