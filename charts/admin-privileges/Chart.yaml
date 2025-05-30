@@ -1,4 +1,4 @@
 apiVersion: v2
 name: admin-privileges
 description: Resources require admin privileged permission
-version: 1.0.6
+version: 1.0.7
