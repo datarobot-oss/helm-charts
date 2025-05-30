@@ -2,6 +2,14 @@ apiVersion: v1
 entries:
   admin-privileges:
   - apiVersion: v2
+    created: "2025-05-30T07:12:53.650075155Z"
+    description: Resources require admin privileged permission
+    digest: eca0b81caab847e3fe955a23d399ca52a87f2ab1acce3881c027efab83bab50f
+    name: admin-privileges
+    urls:
+    - https://github.com/datarobot-oss/helm-charts/releases/download/admin-privileges-1.0.6/admin-privileges-1.0.6.tgz
+    version: 1.0.6
+  - apiVersion: v2
     created: "2025-04-24T14:50:55.563466687Z"
     description: Resources require admin privileged permission
     digest: fddd517ea0b34f5639a0911ef72dc4f61c789c149471efcaff4fb6614e5eb4c7
@@ -75,4 +83,4 @@ entries:
     urls:
     - https://github.com/datarobot-oss/helm-charts/releases/download/generic-0.0.2/generic-0.0.2.tgz
     version: 0.0.2
-generated: "2025-04-24T14:50:55.563491924Z"
+generated: "2025-05-30T07:12:53.650108099Z"
