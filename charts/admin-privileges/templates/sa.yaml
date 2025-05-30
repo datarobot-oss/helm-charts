@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: datarobot-installer
+  name: {{ include "admin-privileges.serviceAccountName" . }}
   namespace: {{ include "admin-privileges.namespace" . }}
   labels:
     {{- include "admin-privileges.labels" . | nindent 4 -}}

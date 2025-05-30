@@ -15,7 +15,7 @@ metadata:
   name: bundle-access
 subjects:
   - kind: ServiceAccount
-    name: datarobot-installer
+    name: {{ include "admin-privileges.serviceAccountName" . }}
     namespace: {{ include "admin-privileges.namespace" . }}
 roleRef:
   kind: ClusterRole
