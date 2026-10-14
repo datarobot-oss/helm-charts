@@ -11,11 +11,16 @@ jobs:
   lint-changelog:
     name: Check all docs
     runs-on: ubuntu-latest
-    container:
-      image: jnorwood/helm-docs:v1.11.0
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
+
+    # The jnorwood/helm-docs image is too old to run the Node 24 that
+    # GitHub actions now use, so install the same helm-docs release instead.
+    - name: Install helm-docs
+      run: |
+        curl -sSL https://github.com/norwoodj/helm-docs/releases/download/v1.11.0/helm-docs_1.11.0_Linux_x86_64.tar.gz \
+          | sudo tar -xz -C /usr/local/bin helm-docs
 
     - name: Check all charts README.md
       run: sh ci/helm-docs.sh
