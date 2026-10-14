@@ -1,0 +1,35 @@
+# Read-only cluster-scoped access for the Helm `lookup` calls the DataRobot
+# chart makes at install time: notebooks lists StorageClasses to find the
+# default one, cloudnative-pg checks whether its CRDs exist, and the internal
+# Redis sentinel lists Services. A Role can't grant cluster-scoped reads.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "admin-privileges.serviceAccountName" . }}-cluster-read-{{ include "admin-privileges.namespace" . }}
+  labels:
+    {{- include "admin-privileges.labels" . | nindent 4 }}
+rules:
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apiextensions.k8s.io"]
+  resources: ["customresourcedefinitions"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "admin-privileges.serviceAccountName" . }}-cluster-read-{{ include "admin-privileges.namespace" . }}
+  labels:
+    {{- include "admin-privileges.labels" . | nindent 4 }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "admin-privileges.serviceAccountName" . }}
+  namespace: {{ include "admin-privileges.namespace" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "admin-privileges.serviceAccountName" . }}-cluster-read-{{ include "admin-privileges.namespace" . }}
