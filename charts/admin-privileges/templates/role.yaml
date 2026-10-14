@@ -95,13 +95,10 @@ rules:
   resources: ["executionenvironments", "inferenceservers"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 - apiGroups: ["predictions.datarobot.com"]
-  resources: ["executionenvironments/status"]
-  verbs: ["get"]
-- apiGroups: ["predictions.datarobot.com"]
-  resources: ["inferenceservers/status"]
+  resources: ["executionenvironments/status", "inferenceservers/status"]
   verbs: ["get", "patch", "update"]
 - apiGroups: ["predictions.datarobot.com"]
-  resources: ["inferenceservers/finalizers"]
+  resources: ["executionenvironments/finalizers", "inferenceservers/finalizers"]
   verbs: ["update"]
 # api-gateway (Envoy Gateway) is mandatory since 11.12. Its namespaced
 # controller Role and the app's own Gateway/HTTPRoute/policy objects use most of
