@@ -123,6 +123,14 @@ rules:
 - apiGroups: ["apps.nvidia.com"]
   resources: ["nimservices", "nimservice", "nimcaches", "nimcache", "nimservices/finalizers"]
   verbs: ["*"]
+# covalent-cloud-server in DataRobot 11.14 adds these to covalent-sa-role
+# ("*" on the nvidia.com kinds), so the installer must hold them too.
+- apiGroups: ["nvidia.com"]
+  resources: ["dynamographdeployments", "dynamographdeployments/status", "dynamographdeploymentrequests", "dynamographdeploymentrequests/status"]
+  verbs: ["*"]
+- apiGroups: ["aigateway.envoyproxy.io"]
+  resources: ["aigatewayroutes", "aiservicebackends"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "deletecollection"]
 - apiGroups: ["tokens.datarobot.com"]
   resources: ["inferenceworkloads", "inferenceworkloads/status", "tokenpools", "tokenpools/status"]
   verbs: ["*"]
